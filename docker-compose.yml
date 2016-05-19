@@ -1,0 +1,19 @@
+alerta-db:
+  image: mongo
+  volumes:
+     - ./mongodb:/data/db
+  restart: always
+
+alpine-alerta:
+  image: alpine-alerta
+  environment:
+    - PROVIDER=google
+    - AUTH_REQUIRED=True
+    - ALLOWED_EMAIL_DOMAIN=mycompany.com
+    - CLIENT_ID=***.apps.googleusercontent.com
+    - CLIENT_SECRET=***
+  ports:
+    - 8181:80
+  links:
+    - alerta-db:mongo
+  restart: always
